@@ -67,8 +67,13 @@ class GEM:
                         metadata_types.append('validation')
                     if 'Analysis' in metadata['Study']:
                         metadata_types.append('analysis')
-                metadata_str = " and ".join(", ".join(metadata_types[:-1]))
-                return "GEM object with "+metadata_str+" metadata and "+str(member_count)+" data files"
+                metadata_str = ''
+                if len(metadata_types) == 1:
+                    metadata_str = ' ' + metadata_types[0]
+                elif len(metadata_types) > 1:
+                    metadata_str = ' ' + ' and '.join([", ".join(metadata_types[:-1]),metadata_types[-1]])
+
+                return "GEM object with"+metadata_str+" metadata and "+str(member_count)+" data files"
             else:
                 return "GEM object with "+str(member_count)+" data files (no metadata)"
         return "Empty GEM object"
@@ -154,8 +159,6 @@ class GEM:
     def open(self,file_name):
         ''' open file in the gem file '''
         if (os.path.exists(self._gemfile_location)):
-
-
             with tarfile.open(self._gemfile_location,"r:gz") as tar_handle:
                 for member in tar_handle.getmembers():
                     this_name = member.name

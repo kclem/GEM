@@ -110,10 +110,10 @@ def add_guide_metadata_from_crispor(gem,crispor_guide_file,crispor_offtarget_fil
 
     gem.metadata['Study']['Design']['Targets'] = [target]
 
-    guide_gem_loc = "design/CRISPOR/"+crispor_guide_file
+    guide_gem_loc = "Design/Targets/CRISPOR/"+crispor_guide_file
     gem.add_file(crispor_guide_file,guide_gem_loc)
 
-    offtargets_gem_loc = "design/CRISPOR/"+crispor_offtarget_file
+    offtargets_gem_loc = "Design/Targets/CRISPOR/"+crispor_offtarget_file
     gem.add_file(crispor_guide_file,offtargets_gem_loc)
 
     gem.update_metadata()
@@ -131,8 +131,8 @@ def add_validation_metadata_from_crispor(gem,crispor_amplicons_file):
 
     if 'Study' not in gem.metadata:
         gem.metadata['Study'] = {}
-    if 'Validation' not in gem.metadata['Study']:
-        gem.metadata['Study']['Validation'] = {}
+    if 'Design' not in gem.metadata['Study']:
+        gem.metadata['Study']['Design'] = {}
 
     target_info = []
     with open(crispor_amplicons_file,'r') as amplicons_fh:
@@ -162,9 +162,9 @@ def add_validation_metadata_from_crispor(gem,crispor_amplicons_file):
 
             target_info.append(guide_info)
 
-    gem.metadata['Study']['Validation']['Targets'] = target_info
+    gem.metadata['Study']['Design']['Target_Sequencing'] = target_info
 
-    amplicons_gem_loc = "validation/CRISPOR/"+crispor_amplicons_file
+    amplicons_gem_loc = "Design/Target_Sequencing/CRISPOR/"+crispor_amplicons_file
     gem.add_file(crispor_amplicons_file,amplicons_gem_loc)
 
     gem.update_metadata()
